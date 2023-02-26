@@ -1,6 +1,7 @@
 import { Contact } from 'components/Contact/Contact';
+import PropTypes from 'prop-types';
 
-export const ContactsList = ({ contacts, filter }) => {
+export const ContactList = ({ contacts, filter }) => {
   const List = contacts => {
     return contacts.map(({ id, name, number }) => {
       return (
@@ -35,3 +36,9 @@ export const ContactsList = ({ contacts, filter }) => {
 
   return <ul>{filter ? Filtered(contacts, filter) : List(contacts)}</ul>;
 };
+
+
+ContactList.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  filter: PropTypes.string.isRequired,
+}
