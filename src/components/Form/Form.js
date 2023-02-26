@@ -10,13 +10,25 @@ const schema = yup.object().shape({
       excludeEmptyString: true,
     })
     .required('Required'),
+  number: yup
+    .string()
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      {
+        message:
+          'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +',
+        excludeEmptyString: true,
+      }
+    )
+    .required('Required'),
 });
 
 const initialValues = {
   name: '',
+  number: '',
 };
 
-export const ContactForm = ({onFormSubmit}) => {
+export const ContactForm = ({ onFormSubmit }) => {
   const handleSubmit = (values, { resetForm }) => {
     onFormSubmit(values);
     resetForm();
@@ -33,6 +45,11 @@ export const ContactForm = ({onFormSubmit}) => {
           Name
           <Field type="text" name="name"></Field>
           <ErrorMessage name="name" />
+        </label>
+        <label htmlFor="name">
+          Number
+          <Field type="tel" name="number"></Field>
+          <ErrorMessage name="number" />
         </label>
         <button type="submit">Add Contact</button>
       </Form>
