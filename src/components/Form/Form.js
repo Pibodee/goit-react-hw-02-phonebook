@@ -1,6 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
+import { FormButton, StyledField, StyledForm } from './Form.styled';
 
 const schema = yup.object().shape({
   name: yup
@@ -41,19 +42,19 @@ export const ContactForm = ({ onFormSubmit }) => {
       onSubmit={handleSubmit}
       validationSchema={schema}
     >
-      <Form autoComplete="off">
+      <StyledForm autoComplete="off">
         <label htmlFor="name">
           Name
-          <Field type="text" name="name"></Field>
+          <StyledField type="text" name="name"></StyledField>
           <ErrorMessage name="name" />
         </label>
         <label htmlFor="name">
           Number
-          <Field type="tel" name="number"></Field>
+          <StyledField type="tel" name="number"></StyledField>
           <ErrorMessage name="number" />
         </label>
-        <button type="submit">Add Contact</button>
-      </Form>
+        <FormButton type="submit">Add Contact</FormButton>
+      </StyledForm>
     </Formik>
   );
 };
