@@ -17,22 +17,27 @@ export class App extends Component {
     number: '',
   };
 
-  addContact = values => {
+  addContact = (values, { resetForm }) => {
     let newContact = values;
 
     const verification = this.state.contacts.filter(
-      contact=> contact.name.toLowerCase()===newContact.name.toLowerCase()
-    )
-    
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+    );
+
     if (verification.length) {
       alert(`${newContact.name} is already in contacts`);
-      return
-    }
+      return;
+    } else {
+      newContact.id = nanoid();
+      this.setState(prevState => ({
+        contacts: [...prevState.contacts, newContact],
+      }));
 
-    newContact.id = nanoid();
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
-    }));
+      resetForm({
+        name: '',
+        number: '',
+      });
+    }
   };
 
   onFiletr = ({ target: { name, value } }) => {
@@ -41,11 +46,20 @@ export class App extends Component {
     });
   };
 
+  filterContacts = () => {
+    if (!this.state.filter) {
+      return;
+    }
+    return this.state.contacts.filter(({ name }) => {
+      return name.toLowerCase().includes(this.state.filter.toLowerCase());
+    });
+  };
+
   onDelete = evtId => {
     this.setState({
       contacts: this.state.contacts.filter(({ id }) => id !== evtId),
     });
-  }
+  };
 
   render() {
     return (
@@ -56,7 +70,7 @@ export class App extends Component {
         <Filter onInput={this.onFiletr} />
         <ContactList
           contacts={this.state.contacts}
-          filter={this.state.filter}
+          filtered={this.filterContacts()}
           onDelete={this.onDelete}
         />
       </>
