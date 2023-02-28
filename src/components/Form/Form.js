@@ -31,9 +31,8 @@ const initialValues = {
 };
 
 export const ContactForm = ({ onFormSubmit }) => {
-  const handleSubmit = (values, { resetForm }) => {
-    onFormSubmit(values);
-    resetForm();
+  const handleSubmit = (values, actions) => {
+    onFormSubmit(values, actions);
   };
 
   return (
