@@ -13,8 +13,6 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   addContact = (values, { resetForm }) => {
@@ -48,7 +46,7 @@ export class App extends Component {
 
   filterContacts = () => {
     if (!this.state.filter) {
-      return;
+      return this.state.contacts;
     }
     return this.state.contacts.filter(({ name }) => {
       return name.toLowerCase().includes(this.state.filter.toLowerCase());
@@ -69,7 +67,6 @@ export class App extends Component {
         <h2>Contacts</h2>
         <Filter onInput={this.onFiletr} />
         <ContactList
-          contacts={this.state.contacts}
           filtered={this.filterContacts()}
           onDelete={this.onDelete}
         />
